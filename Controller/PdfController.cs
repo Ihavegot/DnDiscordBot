@@ -2,21 +2,23 @@ using System;
 using PdfSharp.Pdf;
 using PdfSharp.Pdf.IO;
 using PdfSharp.Pdf.AcroForms;
+using Discord.WebSocket;
+using Discord;
 
 namespace ConsoleApp.Pdf
 {
     public class PdfController
     {
         private string pdfPath = "C:\\Users\\Lukasz\\Desktop\\DnDiscordBot\\character.pdf";
-        public PdfController()
-        {
-            PdfDocument document = PdfReader.Open(pdfPath, PdfDocumentOpenMode.Modify);
-            Console.WriteLine($"Loaded PDF file with {document.PageCount} pages.");
-        }
+        public PdfController(){}
 
-        public void ReadPdf(string filePath)
+        public async Task SendPdf(SocketMessage message)
         {
-            // Method to read a PDF
+            if (message.Channel is ITextChannel textChannel)
+            {
+                await ClearMessagesAsync(textChannel);
+            }
+            await message.Channel.SendFileAsync(pdfPath, "Character Sheet");
         }
 
         public void UpdateFormField(string fieldName, string fieldValue)
@@ -40,6 +42,14 @@ namespace ConsoleApp.Pdf
             {
                 Console.WriteLine("No AcroForm found in the PDF document.");
             }
+        }
+
+        private async Task ClearMessagesAsync(ITextChannel channel)
+        {
+            if (channel == null) return;
+
+            var messages = await channel.GetMessagesAsync(100).FlattenAsync();
+            await channel.DeleteMessagesAsync(messages);
         }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using ConsoleApp.Controller;
-using ConsoleApp.Pdf;
 using Discord;
 using Discord.WebSocket;
 using DotNetEnv;
@@ -12,11 +11,6 @@ class Program
 
     static async Task Main(string[] args)
     {
-        // PdfController pdfController = new PdfController();
-        // pdfController.UpdateFormField("CharacterName", "Dupa");
-        // pdfController.UpdateFormField("Background", "Noble");
-        // pdfController.UpdateFormField("ClassLevel", "Bard 1");
-        // pdfController.UpdateFormField("PlayerName", "Jajo");
         Env.TraversePath().Load();
         _token = Env.GetString("DISCORD_BOT_TOKEN", "DUPA");
 

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using ConsoleApp.Controller.Commands;
+using ConsoleApp.Pdf;
 using Discord;
 using Discord.WebSocket;
 
@@ -17,43 +18,51 @@ namespace ConsoleApp.Controller
 
         public void ExecuteCommand(SocketMessage message)
         {
-            if ((message.Author.Id == _client?.CurrentUser.Id) || message.Channel.Name != "dice")
-                return;
+            //Character
+            if ((message.Author.Id != _client?.CurrentUser.Id) && message.Channel.Name == "character"){
+                if (_client != null && message.Content.Contains("character")){
+                    PdfController pdfController = new PdfController();
+                    _ = pdfController.SendPdf(message);
+                }
+            }
 
-            switch (CommandStartsWith(message))
-            {
-                case "d4":
-                    _command = new D4Command();
-                    _command.Execute(message);
-                    break;
-                case "d6":
-                    _command = new D6Command();
-                    _command.Execute(message);
-                    break;
-                case "d8":
-                    _command = new D8Command();
-                    _command.Execute(message);
-                    break;
-                case "d10":
-                    _command = new D10Command();
-                    _command.Execute(message);
-                    break;
-                case "d12":
-                    _command = new D12Command();
-                    _command.Execute(message);
-                    break;
-                case "d20":
-                    _command = new D20Command();
-                    _command.Execute(message);
-                    break;
-                case "d100":
-                    _command = new D100Command();
-                    _command.Execute(message);
-                    break;
-                default:
-                    _command = new DiceClearCommand();
-                    _command.Execute(message);
-                    break;
+            //Dice
+            if ((message.Author.Id != _client?.CurrentUser.Id) && message.Channel.Name == "dice"){
+                switch (CommandStartsWith(message))
+                {
+                    case "d4":
+                        _command = new D4Command();
+                        _command.Execute(message);
+                        break;
+                    case "d6":
+                        _command = new D6Command();
+                        _command.Execute(message);
+                        break;
+                    case "d8":
+                        _command = new D8Command();
+                        _command.Execute(message);
+                        break;
+                    case "d10":
+                        _command = new D10Command();
+                        _command.Execute(message);
+                        break;
+                    case "d12":
+                        _command = new D12Command();
+                        _command.Execute(message);
+                        break;
+                    case "d20":
+                        _command = new D20Command();
+                        _command.Execute(message);
+                        break;
+                    case "d100":
+                        _command = new D100Command();
+                        _command.Execute(message);
+                        break;
+                    default:
+                        _command = new DiceClearCommand();
+                        _command.Execute(message);
+                        break;
+                }
             }
         }
 
