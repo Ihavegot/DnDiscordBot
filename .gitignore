@@ -1,0 +1,8 @@
+# Ignore the obj folder
+obj/
+
+# Ignore the bin folder
+bin/
+
+# Ignore environment variable files
+.env
