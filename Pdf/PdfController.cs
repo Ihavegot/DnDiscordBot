@@ -7,7 +7,7 @@ namespace ConsoleApp.Pdf
 {
     public class PdfController
     {
-        private string pdfPath = "C:\\Users\\Lukasz\\Documents\\.NET Projects\\ConsoleApp\\character.pdf";
+        private string pdfPath = "C:\\Users\\Lukasz\\Desktop\\DnDiscordBot\\character.pdf";
         public PdfController()
         {
             PdfDocument document = PdfReader.Open(pdfPath, PdfDocumentOpenMode.Modify);

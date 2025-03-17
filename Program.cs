@@ -13,10 +13,10 @@ class Program
     static async Task Main(string[] args)
     {
         // PdfController pdfController = new PdfController();
-        // pdfController.UpdateFormField("CharacterName", "Gandalf");
+        // pdfController.UpdateFormField("CharacterName", "Dupa");
         // pdfController.UpdateFormField("Background", "Noble");
-        // pdfController.UpdateFormField("ClassLevel", "Wizard 1");
-        // pdfController.UpdateFormField("PlayerName", "Lukasz");
+        // pdfController.UpdateFormField("ClassLevel", "Bard 1");
+        // pdfController.UpdateFormField("PlayerName", "Jajo");
         Env.TraversePath().Load();
         _token = Env.GetString("DISCORD_BOT_TOKEN", "DUPA");
 
