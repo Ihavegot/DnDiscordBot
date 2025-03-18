@@ -20,9 +20,23 @@ namespace ConsoleApp.Controller
         {
             //Character
             if ((message.Author.Id != _client?.CurrentUser.Id) && message.Channel.Name == "character"){
-                if (_client != null && message.Content.Contains("character")){
-                    PdfController pdfController = new PdfController();
-                    _ = pdfController.SendPdf(message);
+                PdfController pdfController = new PdfController();
+                switch(CommandStartsWith(message)){
+                    case "character":
+                        _ = pdfController.SendPdf(message);
+                        break;
+                    case "modcharacter":
+                        string[] splitMessage = message.Content.Split(" ");
+                        // [0] = modcharacter, [1] = field name, [2] = field value
+                        if (splitMessage.Length == 3)
+                        {
+                            pdfController.UpdateFormField(splitMessage[1], splitMessage[2]);
+                        }
+                        else
+                        {
+                            message.Channel.SendMessageAsync("Invalid command. Usage: modcharacter [field name] [field value]");
+                        }
+                        break;
                 }
             }
 
@@ -68,7 +82,7 @@ namespace ConsoleApp.Controller
 
         private string CommandStartsWith(SocketMessage message)
         {
-            string[] commands = new string[] { "d4", "d6", "d8", "d100", "d12", "d20", "d10" };
+            string[] commands = new string[] { "d4", "d6", "d8", "d100", "d12", "d20", "d10", "modcharacter", "character" };
             foreach (var command in commands)
             {
                 if (message.Content.Contains(command))
