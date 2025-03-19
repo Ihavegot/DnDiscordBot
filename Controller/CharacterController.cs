@@ -7,10 +7,10 @@ using Discord;
 
 namespace ConsoleApp.Pdf
 {
-    public class PdfController
+    public class CharacterController
     {
         private string pdfPath = "C:\\Users\\Lukasz\\Desktop\\DnDiscordBot\\character.pdf";
-        public PdfController(){}
+        public CharacterController(){}
 
         public async Task SendPdf(SocketMessage message)
         {

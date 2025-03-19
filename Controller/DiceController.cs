@@ -7,20 +7,20 @@ using Discord.WebSocket;
 
 namespace ConsoleApp.Controller
 {
-    public class CommandController
+    public class DiceController
     {
         private DiscordSocketClient _client;
         IDiceCommand? _command;
-        public CommandController(DiscordSocketClient _client)
+        public DiceController(DiscordSocketClient _client)
         {
             this._client = _client;
         }
 
         public void ExecuteCommand(SocketMessage message)
         {
-            //Character
+            // TODO: Refactor to universal controller and create class for DiceCOntroller and CharacterController
             if ((message.Author.Id != _client?.CurrentUser.Id) && message.Channel.Name == "character"){
-                PdfController pdfController = new PdfController();
+                CharacterController pdfController = new CharacterController();
                 switch(CommandStartsWith(message)){
                     case "character":
                         _ = pdfController.SendPdf(message);
@@ -40,7 +40,6 @@ namespace ConsoleApp.Controller
                 }
             }
 
-            //Dice
             if ((message.Author.Id != _client?.CurrentUser.Id) && message.Channel.Name == "dice"){
                 switch (CommandStartsWith(message))
                 {

@@ -7,7 +7,7 @@ class Program
 {
     private static string? _token;
     private static DiscordSocketClient? _client;
-    private static CommandController? _commandController;
+    private static DiceController? _commandController;
 
     static async Task Main(string[] args)
     {
@@ -21,7 +21,7 @@ class Program
 
         _client = new DiscordSocketClient(config);
         _client.Log += Log;
-        _commandController = new CommandController(_client);
+        _commandController = new DiceController(_client);
         _client.MessageReceived += MessageReceivedAsync;
 
         await _client.LoginAsync(TokenType.Bot, _token);
