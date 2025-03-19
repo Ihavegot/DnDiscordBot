@@ -5,7 +5,7 @@ using Discord.WebSocket;
 
 namespace ConsoleApp.Controller.Commands
 {
-    public class DiceClearCommand : ICommand
+    public class DiceClearCommand : IDiceCommand
     {
         public async Task Execute(SocketMessage message)
         {

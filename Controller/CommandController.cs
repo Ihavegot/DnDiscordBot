@@ -10,7 +10,7 @@ namespace ConsoleApp.Controller
     public class CommandController
     {
         private DiscordSocketClient _client;
-        ICommand? _command;
+        IDiceCommand? _command;
         public CommandController(DiscordSocketClient _client)
         {
             this._client = _client;
