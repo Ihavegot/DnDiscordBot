@@ -1,18 +1,19 @@
 ﻿using ConsoleApp.Controller;
 using Discord;
 using Discord.WebSocket;
+using DnDiscordBot.Controller;
 using DotNetEnv;
 
 class Program
 {
     private static string? _token;
     private static DiscordSocketClient? _client;
-    private static DiceController? _commandController;
+    private static CommandController? _commandController;
 
     static async Task Main(string[] args)
     {
         Env.TraversePath().Load();
-        _token = Env.GetString("DISCORD_BOT_TOKEN", "DUPA");
+        _token = Env.GetString("DISCORD_BOT_TOKEN", "NO_TOKEN");
 
         var config = new DiscordSocketConfig
         {
@@ -21,7 +22,7 @@ class Program
 
         _client = new DiscordSocketClient(config);
         _client.Log += Log;
-        _commandController = new DiceController(_client);
+        _commandController = new CommandController(_client);
         _client.MessageReceived += MessageReceivedAsync;
 
         await _client.LoginAsync(TokenType.Bot, _token);

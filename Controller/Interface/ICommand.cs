@@ -1,9 +1,8 @@
-using Discord;
 using Discord.WebSocket;
 
-namespace ConsoleApp.Controller
+namespace DnDiscordBot.Controller
 {
-    public interface IDiceCommand
+    public interface ICommand
     {
         Task Execute(SocketMessage message);
     }

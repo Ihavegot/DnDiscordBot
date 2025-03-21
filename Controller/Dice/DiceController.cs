@@ -1,67 +1,36 @@
 using ConsoleApp.Controller.Commands;
 using Discord.WebSocket;
 
-namespace ConsoleApp.Controller
+namespace DnDiscordBot.Controller
 {
-    public class DiceController
+    public class DiceController : IController
     {
-        private DiscordSocketClient _client;
-        IDiceCommand? _command;
-        public DiceController(DiscordSocketClient _client)
-        {
-            this._client = _client;
-        }
-
-        public void ExecuteCommand(SocketMessage message)
-        {
-            if ((message.Author.Id != _client?.CurrentUser.Id) && message.Channel.Name == "dice"){
-                switch (CommandStartsWith(message))
-                {
-                    case "d4":
-                        _command = new D4Command();
-                        _command.Execute(message);
-                        break;
-                    case "d6":
-                        _command = new D6Command();
-                        _command.Execute(message);
-                        break;
-                    case "d8":
-                        _command = new D8Command();
-                        _command.Execute(message);
-                        break;
-                    case "d10":
-                        _command = new D10Command();
-                        _command.Execute(message);
-                        break;
-                    case "d12":
-                        _command = new D12Command();
-                        _command.Execute(message);
-                        break;
-                    case "d20":
-                        _command = new D20Command();
-                        _command.Execute(message);
-                        break;
-                    case "d100":
-                        _command = new D100Command();
-                        _command.Execute(message);
-                        break;
-                    default:
-                        _command = new DiceClearCommand();
-                        _command.Execute(message);
-                        break;
-                }
-            }
-        }
-
-        private string CommandStartsWith(SocketMessage message)
-        {
-            string[] commands = new string[] { "d4", "d6", "d8", "d100", "d12", "d20", "d10"};
-            foreach (var command in commands)
+        private Dictionary<string, ICommand> _commands;
+        public DiceController(){
+            _commands = new Dictionary<string, ICommand>
             {
-                if (message.Content.Contains(command))
-                    return command;
+                { "d4", new D4Command() },
+                { "d6", new D6Command() },
+                { "d8", new D8Command() },
+                { "d10", new D10Command() },
+                { "d12", new D12Command() },
+                { "d20", new D20Command() },
+                { "d100", new D100Command() },
+                { "clear", new DiceClearCommand() }
+            };
+        }
+
+        public void Execute(SocketMessage message)
+        {
+            try{
+                if(_commands.ContainsKey(message.Content)){
+                    _commands[message.Content].Execute(message);
+                }else{
+                    _commands["clear"].Execute(message);
+                }
+            }catch(Exception e){
+                Console.WriteLine(e.Message);
             }
-            return string.Empty;
         }
     }
 }
