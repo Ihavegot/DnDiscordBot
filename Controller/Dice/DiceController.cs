@@ -1,7 +1,4 @@
-using System;
-using System.Collections.Generic;
 using ConsoleApp.Controller.Commands;
-using Discord;
 using Discord.WebSocket;
 
 namespace ConsoleApp.Controller
