@@ -23,7 +23,7 @@ namespace DnDiscordBot.Controller
         public void Execute(SocketMessage message)
         {
             try{
-                if(_commands.ContainsKey(message.Content)){
+                if(_commands.ContainsKey(message.Content.ToLower())){
                     _commands[message.Content].Execute(message);
                 }else{
                     _commands["clear"].Execute(message);
