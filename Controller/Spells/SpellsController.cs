@@ -21,7 +21,7 @@ namespace DnDiscordBot.Controller.Spells
                     {
                         var records = csv.GetRecords<SpellsDataModel>();
                         var spellName = message.Content.Replace("spells ", "");
-                        var spell = records.FirstOrDefault(r => r.Name.Contains(spellName, StringComparison.OrdinalIgnoreCase));
+                        var spell = records.FirstOrDefault(r => !string.IsNullOrEmpty(r.Name) && r.Name.Contains(spellName, StringComparison.OrdinalIgnoreCase));
                         
                         if (spell != null)
                         {
