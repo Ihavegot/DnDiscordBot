@@ -2,6 +2,7 @@ using System;
 using System.Windows.Input;
 using ConsoleApp.Controller;
 using Discord.WebSocket;
+using DnDiscordBot.Controller.Spells;
 
 namespace DnDiscordBot.Controller
 {
@@ -14,7 +15,8 @@ namespace DnDiscordBot.Controller
             this._client = _client;
             _commands = new Dictionary<string, IController>
             {
-                { "dice", new DiceController() }
+                { "dice", new DiceController() },
+                { "spells", new SpellsController() }
             };
         }
 
