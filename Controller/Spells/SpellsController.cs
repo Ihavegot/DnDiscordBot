@@ -13,7 +13,8 @@ namespace DnDiscordBot.Controller.Spells
         {
             try
             {
-                using (var reader = new StreamReader("..\\..\\..\\5eData\\5eSpells.csv"))
+                // using (var reader = new StreamReader("5eData/5eSpells.csv")) // Linux
+                using (var reader = new StreamReader("..\\..\\..\\5eData\\5eSpells.csv")) // Windows
                 using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
                 {
                     var records = csv.GetRecords<SpellsDataModel>();
