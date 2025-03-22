@@ -9,7 +9,6 @@ namespace DnDiscordBot.Controller.Spells
     public class SpellsController : MessageController, IController
     {
         public SpellsController() { }
-
         public void Execute(SocketMessage message)
         {
             try
@@ -22,8 +21,7 @@ namespace DnDiscordBot.Controller.Spells
 
                     if (spell != null)
                     {
-                        string output = $"{spell.Name} - {spell.Level} - {spell.School}";
-                        _ = SendMessage(message, output ?? string.Empty);
+                        _ = SendMessage(message, SpellOutput(spell) ?? string.Empty);
                     }
                     else
                     {
@@ -36,6 +34,20 @@ namespace DnDiscordBot.Controller.Spells
             {
                 Console.WriteLine(e.Message);
             }
+        }
+        private string SpellOutput(SpellsDataModel spell)
+        {   // Leave this ugly format for now, will be changed later
+            return $@"{spell.Name}
+
+Source: {spell.Source}
+Level: {spell.Level} {(spell.Ritual?.Equals("Y") == true ? "(Ritual)" : "")}
+School: {spell.School}
+Casting Time: {spell.CastingTime}
+Range: {spell.Range} {spell.Area}
+Components: {(spell.Verbal?.Equals("Y") == true ? "V" : "")} {(spell.Somatic?.Equals("Y") == true ? "S" : "")} {(spell.Material?.Equals("Y") == true ? "M" : "")}
+Duration: {(spell.Concentration?.Equals("Y") == true ? "(Concentration)" : "")} {spell.Duration}
+
+{spell.Details}";
         }
     }
 }
