@@ -6,7 +6,7 @@ using Discord.WebSocket;
 
 namespace DnDiscordBot.Controller.Spells
 {
-    public class SpellsController : IController
+    public class SpellsController : MessageController, IController
     {
         public SpellsController() { }
 
@@ -36,22 +36,6 @@ namespace DnDiscordBot.Controller.Spells
             {
                 Console.WriteLine(e.Message);
             }
-        }
-
-        public async Task SendMessage(SocketMessage message, string output)
-        {
-            if (message.Channel is ITextChannel textChannel)
-            {
-                await ClearMessagesAsync(textChannel);
-            }
-            await message.Channel.SendMessageAsync(output);
-        }
-        private async Task ClearMessagesAsync(ITextChannel channel)
-        {
-            if (channel == null) return;
-
-            var messages = await channel.GetMessagesAsync(100).FlattenAsync();
-            await channel.DeleteMessagesAsync(messages);
         }
     }
 }
