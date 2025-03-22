@@ -10,7 +10,7 @@ class Program
     private static DiscordSocketClient? _client;
     private static CommandController? _commandController;
 
-    static async Task Main(string[] args)
+    static async Task Main()
     {
         Env.TraversePath().Load();
         _token = Env.GetString("DISCORD_BOT_TOKEN", "NO_TOKEN");

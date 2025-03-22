@@ -14,26 +14,23 @@ namespace DnDiscordBot.Controller.Spells
         {
             try
             {
-                if (message.Content.Contains("spells"))
+                using (var reader = new StreamReader("C:\\Users\\Lukasz\\Desktop\\Git\\DnDiscordBot\\5eData\\5eSpells.csv"))
+                using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
                 {
-                    using (var reader = new StreamReader("C:\\Users\\Lukasz\\Desktop\\Git\\DnDiscordBot\\5eData\\5eSpells.csv"))
-                    using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+                    var records = csv.GetRecords<SpellsDataModel>();
+                    var spell = records.FirstOrDefault(r => !string.IsNullOrEmpty(r.Name) && r.Name.Contains(message.Content, StringComparison.OrdinalIgnoreCase));
+
+                    if (spell != null)
                     {
-                        var records = csv.GetRecords<SpellsDataModel>();
-                        var spellName = message.Content.Replace("spells ", "");
-                        var spell = records.FirstOrDefault(r => !string.IsNullOrEmpty(r.Name) && r.Name.Contains(spellName, StringComparison.OrdinalIgnoreCase));
-                        
-                        if (spell != null)
-                        {
-                            string output = $"{spell.Name} - {spell.Level} - {spell.School}";
-                            _ = SendMessage(message, output ?? string.Empty);
-                        }
-                        else
-                        {
-                            _ = SendMessage(message, $"Spell '{spellName}' not found.");
-                        }
+                        string output = $"{spell.Name} - {spell.Level} - {spell.School}";
+                        _ = SendMessage(message, output ?? string.Empty);
+                    }
+                    else
+                    {
+                        _ = SendMessage(message, $"Spell '{message.Content}' not found.");
                     }
                 }
+
             }
             catch (Exception e)
             {
