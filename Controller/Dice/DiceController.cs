@@ -24,7 +24,7 @@ namespace DnDiscordBot.Controller
         {
             try{
                 if(_commands.ContainsKey(message.Content.ToLower())){
-                    _commands[message.Content].Execute(message);
+                    _commands[message.Content.ToLower()].Execute(message);
                 }else{
                     _commands["clear"].Execute(message);
                 }
