@@ -6,5 +6,5 @@ Here're some of the project's best features:
 
 *   Dice rolls
 *   WIP - 5e classes
-*   WIP - 5e spell list
+*   5e spell list
 *   WIP - Character sheet
