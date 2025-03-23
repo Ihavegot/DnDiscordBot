@@ -19,8 +19,19 @@ namespace DnDiscordBot.Controller.Class
                 using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
                 {
                     var records = csv.GetRecords<ClassDataModel>();
-                    var characterClass = records.FirstOrDefault(r => !string.IsNullOrEmpty(r.Class) && r.Class.Contains(message.Content, StringComparison.OrdinalIgnoreCase));
-                    System.Console.WriteLine(characterClass.Class + " " + characterClass.Subclass + " " + characterClass.HD + " " + characterClass.Caster + " " + characterClass.Prepared + " " + characterClass.LearnSpells + " " + characterClass.Healing + " " + characterClass.Ability + " " + characterClass.Saves + " " + characterClass.Armour + " " + characterClass.Weapons + " " + characterClass.Skills + " " + characterClass.Tools + " " + characterClass.Language + " " + characterClass.ExtraAttack + " " + characterClass.Superiority + " " + characterClass.Evasion + " " + characterClass.FightingStyle + " " + characterClass.Expertise + " " + characterClass.MoveOptions + " " + characterClass.Source + " " + characterClass.LevelToSubclass);
+                    var characterClass = records.FirstOrDefault(
+                        r => !string.IsNullOrEmpty(r.Class) && !string.IsNullOrEmpty(r.Subclass) &&
+                             r.Class.Contains(message.Content.Split(" ")[0], StringComparison.OrdinalIgnoreCase) &&
+                             r.Subclass.Contains(message.Content.Split(" ")[1], StringComparison.OrdinalIgnoreCase)
+                    );
+                    if (characterClass != null)
+                    {
+                        _ = SendMessage(message, SpellOutput(characterClass) ?? string.Empty);
+                    }
+                    else
+                    {
+                        _ = SendMessage(message, $"Class '{message.Content}' not found.");
+                    }
                 }
 
             }
@@ -28,6 +39,11 @@ namespace DnDiscordBot.Controller.Class
             {
                 Console.WriteLine(e.Message);
             }
+        }
+        private string SpellOutput(ClassDataModel characterClass)
+        {
+            return string.Join("\n", characterClass.GetType().GetProperties()
+                .Select(prop => $"{prop.Name}: {prop.GetValue(characterClass)}"));
         }
     }
 }
