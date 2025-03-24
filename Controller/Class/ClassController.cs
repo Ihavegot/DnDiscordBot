@@ -19,14 +19,17 @@ namespace DnDiscordBot.Controller.Class
                 using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
                 {
                     var records = csv.GetRecords<ClassDataModel>();
-                    var characterClass = records.FirstOrDefault(
+                    var characterClass = records.Where(
                         r => !string.IsNullOrEmpty(r.Class) && !string.IsNullOrEmpty(r.Subclass) &&
-                             r.Class.Contains(message.Content.Split(" ")[0], StringComparison.OrdinalIgnoreCase) &&
-                             r.Subclass.Contains(message.Content.Split(" ")[1], StringComparison.OrdinalIgnoreCase)
+                        r.Class.Contains(message.Content.Split(" ")[0], StringComparison.OrdinalIgnoreCase)
                     );
-                    if (characterClass != null)
+                    var characterSubClass = characterClass.FirstOrDefault(
+                        r => !string.IsNullOrEmpty(r.Subclass) &&
+                        r.Subclass.Contains(message.Content.Split(" ")[1], StringComparison.OrdinalIgnoreCase)
+                    );
+                    if (characterSubClass != null)
                     {
-                        _ = SendMessage(message, SpellOutput(characterClass) ?? string.Empty);
+                        _ = SendMessage(message, SpellOutput(characterSubClass) ?? string.Empty);
                     }
                     else
                     {
