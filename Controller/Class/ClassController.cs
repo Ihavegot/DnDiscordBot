@@ -45,7 +45,7 @@ namespace DnDiscordBot.Controller.Class
                         }
                         else
                         {
-                            _ = SendMessage(message, SpellOutput(characterSubClass) ?? string.Empty);
+                            _ = SendMessage(message, SpellOutput(CombineData(classMainInfo, characterSubClass)) ?? string.Empty);
                         }
                     }
 
@@ -57,7 +57,18 @@ namespace DnDiscordBot.Controller.Class
                 Console.WriteLine(e.Message);
             }
         }
-        
+
+        // TODO: Fix this bonobo code
+        private ClassDataModel CombineData(ClassDataModel classMainInfo, ClassDataModel characterSubClass)
+        {
+            foreach(var classValue in characterSubClass.GetType().GetProperties()){
+                if(classValue == null){
+                    characterSubClass.GetType().GetProperty(classValue.Name).SetValue(this, classMainInfo.GetType().GetProperty(classValue.Name).GetValue(classMainInfo));
+                }
+            }
+            return characterSubClass;
+        }
+
         private string SpellOutput(ClassDataModel characterClass)
         {
             return string.Join("\n", characterClass.GetType().GetProperties()
