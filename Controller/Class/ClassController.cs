@@ -1,4 +1,5 @@
 using System.Globalization;
+using System.Reflection;
 using CsvHelper;
 using Discord.WebSocket;
 
@@ -61,9 +62,10 @@ namespace DnDiscordBot.Controller.Class
         // TODO: Fix this bonobo code
         private ClassDataModel CombineData(ClassDataModel classMainInfo, ClassDataModel characterSubClass)
         {
-            foreach(var classValue in characterSubClass.GetType().GetProperties()){
-                if(classValue == null){
-                    characterSubClass.GetType().GetProperty(classValue.Name).SetValue(this, classMainInfo.GetType().GetProperty(classValue.Name).GetValue(classMainInfo));
+            PropertyInfo[] propOfSubClass = typeof(ClassDataModel).GetProperties();
+            foreach(PropertyInfo value in propOfSubClass){
+                if((value.GetValue(characterSubClass) as string) == ""){
+                    value.SetValue(characterSubClass, value.GetValue(classMainInfo));
                 }
             }
             return characterSubClass;
