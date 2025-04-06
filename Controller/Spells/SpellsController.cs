@@ -37,18 +37,8 @@ namespace DnDiscordBot.Controller.Spells
             }
         }
         private string SpellOutput(SpellsDataModel spell)
-        {   // Leave this ugly format for now, will be changed later
-            return $@"{spell.Name}
-
-Source: {spell.Source}
-Level: {spell.Level} {(spell.Ritual?.Equals("Y") == true ? "(Ritual)" : "")}
-School: {spell.School}
-Casting Time: {spell.CastingTime}
-Range: {spell.Range} {spell.Area}
-Components: {(spell.Verbal?.Equals("Y") == true ? "V" : "")} {(spell.Somatic?.Equals("Y") == true ? "S" : "")} {(spell.Material?.Equals("Y") == true ? "M" : "")}
-Duration: {(spell.Concentration?.Equals("Y") == true ? "(Concentration)" : "")} {spell.Duration}
-
-{spell.Details}";
+        {
+            return $@"{spell.Name}{"\n"}{"\n"}Source: {spell.Source}{"\n"}Level: {spell.Level} {(spell.Ritual?.Equals("Y") == true ? "(Ritual)" : "")}{"\n"}School: {spell.School}{"\n"}Casting Time: {spell.CastingTime}{"\n"}Range: {spell.Range} {spell.Area}{"\n"}Components: {(spell.Verbal?.Equals("Y") == true ? "V" : "")} {(spell.Somatic?.Equals("Y") == true ? "S" : "")} {(spell.Material?.Equals("Y") == true ? "M" : "")}{"\n"}Duration: {(spell.Concentration?.Equals("Y") == true ? "(Concentration)" : "")} {spell.Duration}{"\n"}{"\n"}{spell.Details}";
         }
     }
 }
