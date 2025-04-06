@@ -8,7 +8,7 @@ Here're some of the project's features:
 
 *  🎲 Dice rolls
 *  🔮 5e spell list
-*  🎯 WIP - 5e classes
+*  🎯 5e classes
 
 <h2>Running the Project</h2>
 
